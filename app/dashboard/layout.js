@@ -4,9 +4,13 @@ export default function DashboardLayout({children}) {
   
   return (
     <>
-      <Sidebar />
-      <div className="flex flex-col h-screen overflow-y-hidden ml-80 p-20">
-        {children}
+      <div className="flex h-screen">
+        <div className="w-80 p-6">
+          <Sidebar />
+        </div>
+        <div className="flex-1 overflow-y-auto p-6">
+          {children}
+        </div>
       </div>
     </>
   )
