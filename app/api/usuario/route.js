@@ -15,11 +15,13 @@ export async function GET() {
   }
 }
 
-export async function DELETE({ id }) {
+export async function DELETE(req) {
   try {
+    const {searchParams} = new URL(req.url)
+    const param = searchParams.get("id")
     const client = await conn.connect();
     const result = await client.query(
-      `DELETE FROM Usuario WHERE idusuario = ${id}`
+      `DELETE FROM Usuario WHERE idusuario = ${param}`
     );
     client.release();
     return new Response(JSON.stringify(result.rows), { status: 200 });

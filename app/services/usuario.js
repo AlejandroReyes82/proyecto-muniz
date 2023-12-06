@@ -6,3 +6,14 @@ export async function getUsuarios(){
     const data = await res.json()
     return data
 }
+
+export async function deleteUsuario({id}){
+    const res = await fetch(`http://localhost:3000/api/usuario?id=${id}`,{
+        method: 'DELETE'
+    })
+    if(!res.ok || res.body === null){
+        return {error: 'Error eliminando usuario'}
+    }
+    const data = await res.json()
+    return data
+}
