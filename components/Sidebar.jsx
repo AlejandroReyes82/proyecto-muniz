@@ -13,8 +13,7 @@ export default function Sidebar() {
         redirect('/')
     }
 
-    const jsonObject = JSON.parse(user);
-    const { tipo, nombre, apellido } = jsonObject
+    const { tipo, nombre, apellido } = JSON.parse(user)
     const pathname = usePathname()
 
     function logout() {
