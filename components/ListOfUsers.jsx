@@ -10,10 +10,10 @@ import {
 
 import { getUsuarios } from  "../app/services/usuario"
 import { Button } from "./ui/button"
-import DeleteButton from "./DeleteButton";
-  export default async function Example() {
+import DeleteButton from "./DeleteUserButton";
+export default async function Example() {
 
-    const usuarios = await getUsuarios()
+  const usuarios = await getUsuarios()
 
   return (
     <Table>
@@ -25,7 +25,7 @@ import DeleteButton from "./DeleteButton";
         <TableHead> Tipo </TableHead>
         <TableHead> Nombre </TableHead>
         <TableHead> Apellido </TableHead>
-        <TableHead className="text-right"> Accion </TableHead>
+      <TableHead className="text-right"> Accion </TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
@@ -48,6 +48,5 @@ import DeleteButton from "./DeleteButton";
       ))}
     </TableBody>
   </Table>
-  
   );
 }
