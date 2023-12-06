@@ -6,13 +6,12 @@ import { Loader2 } from "lucide-react"
 import { useState } from "react"
 import { auth } from "../services/auth"
 import { useCookies } from 'next-client-cookies'
-import { redirect, useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 export default function Login (){
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const cookies = useCookies();
-    const router = useRouter()
     const user = cookies.get('usuario')
     if(user){
         redirect('/dashboard')
@@ -23,7 +22,7 @@ export default function Login (){
         setLoading(true)
         const data = await auth(e.target[0].value, e.target[1].value)
         if(!data.error){
-            cookies.set('usuario', JSON.stringify({id: data.id, usuario:data.usuario, tipo: data.tipo, nombre: data.nombre, apellido: data.apellido}))
+            cookies.set('usuario', JSON.stringify({id: data.idusuario, usuario:data.usuario, tipo: data.tipo, nombre: data.nombre, apellido: data.apellido}))
             setLoading(false)
         }
         setError(data.error)
