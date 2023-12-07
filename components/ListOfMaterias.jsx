@@ -13,11 +13,11 @@ import DeleteMateriaButton from "./DeleteMateriaButton";
 import { getMateria } from '@/app/services/materia'
 import React from 'react'
 
-export default async function ListOfMaterias({id}) {
-    const materias = await getMateria({id})
+export default async function ListOfMaterias() {
+    const materias = await getMateria()
     return (
         <Table>
-        <TableCaption>Lista de materias registradas en el sistema para la carrera {materias[0].idcarrera}</TableCaption>
+        <TableCaption>Lista de materias registradas en el sistema</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]"> IdMateria </TableHead>
