@@ -20,18 +20,11 @@ export default function Sidebar() {
         cookies.remove('usuario')
     }
 
-    const navigationUser = [
+    const navigationDocente = [
         {
             href: '/dashboard/dosificaciones',
             name: 'Dosificaciones',
             icon: DosificacionIcon()
-            ,
-        },
-        {
-            href: '/dashboard/materias',
-            name: 'Materias',
-            icon: MateriasIcon()
-            ,
         }
     ]
 
@@ -40,19 +33,16 @@ export default function Sidebar() {
             href: '/dashboard/dosificaciones',
             name: 'Dosificaciones',
             icon: DosificacionIcon()
-            ,
         },
         {
             href: '/dashboard/materias',
             name: 'Materias',
             icon: MateriasIcon()
-            ,
         },
         {
             href: '/dashboard/usuarios',
             name: 'Usuarios',
             icon: UserIcon()
-            ,
         }
     ]
 
@@ -62,7 +52,6 @@ export default function Sidebar() {
             href: '/login',
             name: 'Logout',
             icon: LogOutIcon()
-            ,
         }
     ]
 
@@ -91,7 +80,7 @@ export default function Sidebar() {
                                         </Link>
                                     </li>
                                 )) :
-                                navigationUser.map((item, idx) => (
+                                navigationDocente.map((item, idx) => (
                                     <li key={idx}>
                                         <Link href={item.href} legacyBehavior>
                                         <a className={`link ${pathname === item.href ? 'text-blue-500' : ''} flex items-center gap-x-2 p-2 rounded-lg hover:bg-gray-300`}>
@@ -121,9 +110,7 @@ export default function Sidebar() {
                                 <div className="gap-x-4">
                                     <div>
                                         <span className="block text-lg font-semibold">{nombre} {apellido}</span>
-                                        <span className="block mt-px text-xs">
-                                            {tipo}
-                                        </span>
+                                        <span className="block mt-px text-xs">{tipo}</span>
                                     </div>
                                 </div>
                             </div>
