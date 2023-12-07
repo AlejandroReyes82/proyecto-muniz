@@ -1,12 +1,12 @@
-export async function auth(user,pass){
+export async function auth(usuario,contrasena){
     const res = await fetch('http://localhost:3000/api/auth', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            user: user,
-            pass: pass
+            user: usuario,
+            pass: contrasena
         })
     })
     if(!res.ok || res.body === null){

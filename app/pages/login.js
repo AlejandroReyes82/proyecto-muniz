@@ -20,7 +20,9 @@ export default function Login (){
         e.preventDefault()
         setError(null)
         setLoading(true)
-        const data = await auth(e.target[0].value, e.target[1].value)
+        const usuario = e.target[0].value // El primer input
+        const password = e.target[1].value // El segundo input
+        const data = await auth(usuario, password) //Funcion que hace la peticion al servidor
         if(!data.error){
             cookies.set('usuario', JSON.stringify({id: data.idusuario, usuario:data.usuario, tipo: data.tipo, nombre: data.nombre, apellido: data.apellido}))
             setLoading(false)
