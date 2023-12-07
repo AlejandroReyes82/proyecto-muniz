@@ -1,5 +1,5 @@
-export async function getDosificacion(){
-    const res = await fetch('http://localhost:3000/api/dosificacion')
+export async function getDosificacion({id}){
+    const res = await fetch(`http://localhost:3000/api/dosificacion?id=${id}`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }

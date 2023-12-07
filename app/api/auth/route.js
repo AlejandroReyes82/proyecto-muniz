@@ -4,13 +4,13 @@ export async function POST(req) {
       const { user, pass } = await req.json();
       const client = await conn.connect();
       const result = await client.query(
-        `SELECT * FROM Usuario WHERE usuario='${user}' AND contrasena='${pass}'`
+        `SELECT idusuario, usuario, tipo, nombre, apellido FROM Usuario WHERE usuario='${user}' AND contrasena='${pass}'`
       );
       client.release();
       if (result.rows.length == 0)
-        return new Response("Usuario o contraseña incorrectos", {
+        return new Response("Usuario y/o contraseña incorrectos", {
           status: 401,
-        });
+      });
       return new Response(JSON.stringify(result.rows));
     } catch (error) {
       console.log(error);

@@ -13,14 +13,15 @@ import { getDosificacion } from '@/app/services/dosificacion'
 import React from 'react'
 import DeleteDosificacionButton from "./DeleteDosificacionButton"
 
-export default async function ListOfMaterias({id}) {
+export default async function ListOfDosificaciones({id, tipo}) {
+   // si es administrador, obtiene todas las dosificaciones
     const dosificacion = await getDosificacion({id})
     return (
         <Table>
         <TableCaption>Lista de dosificaciones</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]"> ID Usuario </TableHead>
+            {tipo === "Administrador" ? <TableHead> ID Usuario </TableHead> : null}
             <TableHead> ID Carrera </TableHead>
             <TableHead> ID Materia </TableHead>
             <TableHead> Unidad </TableHead>
@@ -32,7 +33,7 @@ export default async function ListOfMaterias({id}) {
         <TableBody>
           {dosificacion.map((item) => (
           <TableRow key={item.idmateria}>
-            <TableCell className="font-medium">{item.idusuario}</TableCell>
+            {tipo === "Administrador" ? <TableCell className="font-medium">{item.idusuario}</TableCell> : null}
             <TableCell>{item.idcarrera}</TableCell>
             <TableCell>{item.idmateria}</TableCell>
             <TableCell>{item.unidad}</TableCell>
