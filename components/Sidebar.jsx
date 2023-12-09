@@ -1,11 +1,10 @@
 'use client'
-import { redirect, useRouter, usePathname } from 'next/navigation'
+import { redirect, usePathname } from 'next/navigation'
 import { useCookies } from 'next-client-cookies'
-import { DosificacionIcon, LogOutIcon, MateriasIcon, UserIcon } from './Icons'
+import { DosificacionIcon, LogOutIcon, MateriasIcon, MoonIcon, UserIcon, SunIcon } from './Icons'
 import Link from 'next/link'
 
 export default function Sidebar() {
-    const router = useRouter()
     const cookies = useCookies()
     const user = cookies.get('usuario')
 

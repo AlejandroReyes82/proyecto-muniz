@@ -2,11 +2,44 @@
 import React from 'react'
 import { Button } from './ui/button'
 import { Loader2 } from 'lucide-react'
-import { Toaster } from 'sonner'
+import { Toaster, toast } from 'sonner'
 import { useState } from 'react'
+import { createMateria } from '@/app/services/materia'
+import { useRouter } from 'next/navigation'
 
 export default function MateriaForm() {
     const [loading, setLoading] = useState(false)
+    const [materia, setMateria] = useState({})
+    const router = useRouter()
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        setLoading(true)
+        const mat = {
+            idcarrera: materia.idcarrera,
+            idmateria: materia.idmateria,
+            nombremateria: materia.nombremateria,
+            horassemana: materia.horassemana,
+            unidad: materia.idunidad,
+            nombreunidad: materia.nombreunidad,
+            idtema: materia.idtema,
+            nombretema: materia.nombretema
+        }
+        setMateria(mat)
+        const result = await createMateria(mat)
+        if (!result.data.error) {
+            toast.success(result.data.message)
+            e.target.reset()
+            setMateria({})
+            setTimeout(() => {
+                router.push("/dashboard/materias")
+            }, 1000)
+        }else{
+            toast.error(result.data.error)
+            e.target[0].select()
+        }
+        setLoading(false)
+    }
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center sm:px-4">
@@ -18,7 +51,7 @@ export default function MateriaForm() {
                     </div>
                     <div className="shadow p-4 py-6 sm:p-6 sm:rounded-lg">
                         <form
-                            onSubmit={() => console.log("hola")}
+                            onSubmit={handleSubmit}
                             className="space-y-5"
                         >
                             <div>
@@ -29,7 +62,7 @@ export default function MateriaForm() {
                                     type="number"
                                     name="idcarrera"
                                     required
-                                    // onChange={(event) => setUser({ ...user, usuario: event.target.value })}
+                                    onChange={(event) => setMateria({ ...materia, idcarrera: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                     // value={id ? user?.usuario : null}
                                 />
@@ -42,7 +75,7 @@ export default function MateriaForm() {
                                     type="number"
                                     name="idmateria"
                                     required
-                                    // onChange={(event) => setUser({ ...user, password: event.target.value })}
+                                    onChange={(event) => setMateria({ ...materia, idmateria: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -54,7 +87,7 @@ export default function MateriaForm() {
                                     type="text"
                                     name="nombremateria"
                                     required
-                                    // onChange={(event) => setUser({ ...user, password: event.target.value })}
+                                    onChange={(event) => setMateria({ ...materia, nombremateria: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -66,7 +99,19 @@ export default function MateriaForm() {
                                     type="number"
                                     name="horassemana"
                                     required
-                                    // onChange={(event) => setUser({ ...user, password: event.target.value })}
+                                    onChange={(event) => setMateria({ ...materia, horassemana: event.target.value })}
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                />
+                            </div>
+                            <div>
+                                <label className="font-medium">
+                                    ID Unidad
+                                </label>
+                                <input
+                                    type="number"
+                                    name="idunidad"
+                                    required
+                                    onChange={(event) => setMateria({ ...materia, idunidad: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -78,7 +123,7 @@ export default function MateriaForm() {
                                     type="text"
                                     name="nombreunidad"
                                     required
-                                    // onChange={(event) => setUser({ ...user, password: event.target.value })}
+                                    onChange={(event) => setMateria({ ...materia, nombreunidad: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -90,10 +135,10 @@ export default function MateriaForm() {
                                     type="number"
                                     name="idtema"
                                     required
-                                    // value={id ? user?.nombre : null}
-                                    // onChange={(event) => setUser({ ...user, nombre: event.target.value })}
+                                    onChange={(event) => setMateria({ ...materia, idtema: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                />
+                                    // value={id ? user?.nombre : null}
+                                    />
                             </div>
                             <div>
                                 <label className="font-medium">
@@ -104,7 +149,7 @@ export default function MateriaForm() {
                                     name="nombretema"
                                     required
                                     // value={id ? user?.apellido : null}
-                                    // onChange={(event) => setUser({ ...user, apellido: event.target.value })}
+                                    onChange={(event) => setMateria({ ...materia, nombretema: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg mb-4"
                                 />
                             </div>
