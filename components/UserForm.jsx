@@ -40,7 +40,7 @@ export default function CreateNewUser () {
         setUser(userData)
         let result = {}
         if(id){
-            result = await putUsuario({userData, id})
+            result = await putUsuario(userData, id)
         }else{
             result = await postUsuario({userData})
         }
@@ -80,7 +80,7 @@ export default function CreateNewUser () {
                                     type="text"
                                     name="username"
                                     required
-                                    onChange={(event) => setUser({ ...user, usuario: event.target.value })}
+                                    // onChange={(event) => setUser({ ...user, usuario: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                     value={id ? user?.usuario : null}
                                 />
