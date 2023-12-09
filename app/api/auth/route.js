@@ -13,12 +13,6 @@ export async function POST(req) {
       });
       return new Response(JSON.stringify(result.rows));
     } catch (error) {
-      console.log(error);
-      return {
-        status: 500,
-        body: {
-          error: "Error obteniendo datos de la base de datos",
-        },
-      };
+      return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
     }
   }
