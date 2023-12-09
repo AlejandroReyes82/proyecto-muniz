@@ -15,6 +15,8 @@ export async function GET(req) {
     return new Response(JSON.stringify(result.rows), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({error: "Error al obtener la información"}), { status: 200 });
+  } finally {
+    conn.end();
   }
 }
 
@@ -38,6 +40,8 @@ export async function DELETE(req) {
 
   } catch (error) {
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
+  } finally {
+    conn.end();
   }
 }
 
@@ -56,6 +60,8 @@ export async function POST(req) {
     return new Response(JSON.stringify({message:"Usuario creado con éxito"}), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
+  } finally {
+    conn.end();
   }
 }
 
@@ -80,6 +86,8 @@ export async function PUT(req) {
     return new Response(JSON.stringify({message:"Usuario actualizado con éxito"}), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
+  } finally {
+    conn.end();
   }
 }
 
