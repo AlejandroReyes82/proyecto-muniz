@@ -8,11 +8,6 @@ export async function GET(req) {
     client.release()
     return new Response(JSON.stringify(result.rows), { status: 200 })
   } catch (error) {
-    return {
-      status: 500,
-      body: {
-        error: "Error obteniendo datos de la base de datos",
-      },
-    }
+    return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
   }
 }
