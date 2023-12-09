@@ -43,13 +43,13 @@ export async function getUsuarioById(id){
     return data
 }
 
-export async function putUsuario({ usuario, id }) {
+export async function putUsuario(userData, id) {
     const res = await fetch(`http://localhost:3000/api/usuario?id=${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(usuario)
+        body: JSON.stringify(userData)
     });
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}

@@ -7,8 +7,8 @@ export async function getMateria() {
     return data
 }
 
-export async function getMateriaById(id) {
-    const res = await fetch(`http://localhost:3000/api/materia/${id}`);
+export async function getMateriaById(id, unidad, tema) {
+    const res = await fetch(`http://localhost:3000/api/materia?id=${id}&unidad=${unidad}&tema=${tema}`);
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -32,7 +32,7 @@ export async function createMateria(materia) {
 }
 
 export async function updateMateria(id, materia) {
-    const res = await fetch(`http://localhost:3000/api/materia/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/materia?id=${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -43,11 +43,13 @@ export async function updateMateria(id, materia) {
         return {error: 'Error obteniendo datos de la base de datos'}
     }
     const data = await res.json()
+    console.log(data)
     return { data }
 }
 
-export async function deleteMateria(id) {
-    const res = await fetch(`http://localhost:3000/api/materia/${id}`, {
+export async function deleteMateria( materia) {
+    const { idmateria, unidad, tema } = materia
+    const res = await fetch(`http://localhost:3000/api/materia?idmateria=${idmateria}&unidad=${unidad}&tema=${tema}`, {
         method: 'DELETE'
     })
     if(!res.ok || res.body === null){
