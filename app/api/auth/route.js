@@ -14,7 +14,5 @@ export async function POST(req) {
       return new Response(JSON.stringify(result.rows));
     } catch (error) {
       return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
-    } finally {
-      conn.end();
     }
   }

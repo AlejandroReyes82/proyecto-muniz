@@ -15,8 +15,6 @@ export async function GET(req) {
     return new Response(JSON.stringify(result.rows), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({error: "Error al obtener la información"}), { status: 200 });
-  } finally {
-    conn.end();
   }
 }
 
@@ -40,8 +38,6 @@ export async function DELETE(req) {
 
   } catch (error) {
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
-  } finally {
-    conn.end();
   }
 }
 
@@ -60,8 +56,6 @@ export async function POST(req) {
     return new Response(JSON.stringify({message:"Usuario creado con éxito"}), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
-  } finally {
-    conn.end();
   }
 }
 
@@ -71,13 +65,9 @@ export async function PUT(req) {
     const idusuario = searchParams.get("id")
     const { usuario, contrasena, nombre, apellido, tipo } = await req.json();
     const client = await conn.connect();
-    const result1 = await client.query(`SELECT * FROM Usuario WHERE idusuario != ${idusuario}`);
+    const result1 = await client.query(`SELECT * FROM Usuario WHERE idusuario = ${idusuario}`);
     if(result1.rows.length === 0){
       return new Response(JSON.stringify({error: "No existe el usuario a actualizar"}), { status: 200 });
-    }
-    const result2 = await client.query(`SELECT * FROM Usuario WHERE usuario = '${usuario}'`);
-    if(result2.rows.length > 0){
-      return new Response(JSON.stringify({error: "El nombre de usuario ya existe"}), { status: 200 });
     }
     await client.query(
       `UPDATE Usuario SET usuario = '${usuario}', contrasena = '${contrasena}', tipo = '${tipo}', nombre = '${nombre}', apellido = '${apellido}' WHERE idusuario = ${idusuario}`
@@ -86,8 +76,6 @@ export async function PUT(req) {
     return new Response(JSON.stringify({message:"Usuario actualizado con éxito"}), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
-  } finally {
-    conn.end();
   }
 }
 
