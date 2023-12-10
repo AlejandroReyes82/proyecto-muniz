@@ -1,21 +1,18 @@
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 
 import { Button } from "./ui/button"
-import { getDosificacion } from '@/app/services/dosificacion'
+import { getDosificacion, getDosificacionByID } from '@/app/services/dosificacion'
 import React from 'react'
 import DeleteDosificacionButton from "./DeleteDosificacionButton"
 
 export default async function ListOfDosificaciones({id, tipo}) {
    // si es administrador, obtiene todas las dosificaciones
-    const dosificacion = await getDosificacion({id})
+   let dosificacion = []
+   if(tipo === "Administrador") {
+    dosificacion = await getDosificacion()
+   }else{
+    dosificacion = await getDosificacionByID({id})
+   }
     return (
         <Table>
         <TableCaption>Lista de dosificaciones</TableCaption>
