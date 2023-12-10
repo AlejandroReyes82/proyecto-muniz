@@ -11,17 +11,18 @@ CREATE TABLE Usuario (
 -- Tabla Materia
 CREATE TABLE Materia (
     IdCarrera INT,
-    IdMateria INT,
+    IdMateria SERIAL,
     NombreMateria VARCHAR(100) NOT NULL,
     HorasSemana INT,
     Unidad INT,
     NombreUnidad VARCHAR(100),
     Tema INT,
     NombreTema VARCHAR(100),
-    PRIMARY KEY (IdCarrera, IdMateria) -- Clave primaria compuesta
+    PRIMARY KEY (IdCarrera, IdMateria)
 );
 
--- Tabla Propuesta de Dosificación
+
+-- Tabla propuesta de dosificación
 CREATE TABLE PropuestaDosificacion (
     IdUsuario INT,
     IdCarrera INT,
@@ -32,4 +33,3 @@ CREATE TABLE PropuestaDosificacion (
     FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (IdCarrera, IdMateria) REFERENCES Materia(IdCarrera, IdMateria)
 );
-
