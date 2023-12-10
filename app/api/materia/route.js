@@ -24,7 +24,7 @@ export async function POST(req) {
     const client = await conn.connect()
     const result1 = await client.query(`SELECT * FROM Materia WHERE idmateria = '${idmateria}' and unidad = '${unidad}' and tema = '${idtema}'`);
     if(result1.rows.length > 0){
-      return new Response(JSON.stringify({error: "La combinación de materia,unidad y tema ya existe"}), { status: 200 });
+      return new Response(JSON.stringify({error: "La combinación de materia, unidad y tema ya existen"}), { status: 200 });
     }
     await client.query(
       `INSERT INTO Materia (idcarrera, idmateria, nombremateria, horassemana, unidad, nombreunidad, tema, nombretema) VALUES (${idcarrera}, ${idmateria}, '${nombremateria}', ${horassemana}, ${unidad}, '${nombreunidad}', ${idtema}, '${nombretema}')`
@@ -48,7 +48,7 @@ export async function PUT(req) {
     return new Response(JSON.stringify({message:"Materia actualizada con éxito"}), { status: 200 });
   } catch (error) {
     if(error.code === '23505'){
-      return new Response(JSON.stringify({error: "La combinación de materia,unidad y tema ya existe"}), { status: 200 });
+      return new Response(JSON.stringify({error: "La combinación de materia,unidad y tema ya existen"}), { status: 200 });
     }
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
   }
