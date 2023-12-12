@@ -3,6 +3,8 @@ import { redirect, usePathname } from 'next/navigation'
 import { useCookies } from 'next-client-cookies'
 import { DosificacionIcon, LogOutIcon, MateriasIcon, MoonIcon, UserIcon, SunIcon } from './Icons'
 import Link from 'next/link'
+import { useState } from 'react'
+import { ModeToggle } from './ThemeToggle'
 
 export default function Sidebar() {
     const cookies = useCookies()
@@ -64,6 +66,13 @@ export default function Sidebar() {
                             {/* eslint-disable-next-line @next/next/no-img-element*/}
                             <img src="http://www.itparral.edu.mx/wp-content/themes/tec-parral/assets/img-gobierno/pleca-tecparral.svg" width={140} className="mx-auto" alt="logo"/>
                         </a>
+                        <div className="py-4 px-4 items-center justify-center text-center">
+                            <div className="gap-x-4">
+                                <div>
+                                    <ModeToggle />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="flex-1 flex flex-col h-full overflow-auto">
                         <ul className="px-4 text-sm font-medium flex-1">
