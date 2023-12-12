@@ -1,5 +1,6 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 export async function getUsuarios(){
-    const res = await fetch('http://localhost:3000/api/usuario')
+    const res = await fetch(`${API_URL}/usuario`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -8,7 +9,7 @@ export async function getUsuarios(){
 }
 
 export async function deleteUsuario({id}){
-    const res = await fetch(`http://localhost:3000/api/usuario?id=${id}`,{
+    const res = await fetch(`${API_URL}/usuario?id=${id}`,{
         method: 'DELETE'
     })
     if(!res.ok || res.body === null){
@@ -19,7 +20,7 @@ export async function deleteUsuario({id}){
 }
 
 export async function postUsuario({userData})  {
-    const res = await fetch('http://localhost:3000/api/usuario', {
+    const res = await fetch(`${API_URL}/usuario`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -34,7 +35,7 @@ export async function postUsuario({userData})  {
 }
 
 export async function getUsuarioById(id){
-    const res = await fetch(`http://localhost:3000/api/usuario?id=${id}`)
+    const res = await fetch(`${API_URL}/usuario?id=${id}`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -43,7 +44,7 @@ export async function getUsuarioById(id){
 }
 
 export async function putUsuario(userData, id) {
-    const res = await fetch(`http://localhost:3000/api/usuario?id=${id}`, {
+    const res = await fetch(`${API_URL}/usuario?id=${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

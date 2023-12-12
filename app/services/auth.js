@@ -1,5 +1,6 @@
 export async function auth(usuario,contrasena){
-    const res = await fetch('https://proyecto-muniz-qxng4mw5p-reyesadrian.vercel.app/api/auth', {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL
+    const res = await fetch(`${API_URL}/auth`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

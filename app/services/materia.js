@@ -1,5 +1,6 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 export async function getMateria() {
-    const res = await fetch('http://localhost:3000/api/materia');
+    const res = await fetch(`${API_URL}/materia` );
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -8,7 +9,7 @@ export async function getMateria() {
 }
 
 export async function getMateriaById(id, unidad, tema) {
-    const res = await fetch(`http://localhost:3000/api/materia?id=${id}&unidad=${unidad}&tema=${tema}`);
+    const res = await fetch(`${API_URL}/materia?id=${id}&unidad=${unidad}&tema=${tema}`);
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -17,7 +18,7 @@ export async function getMateriaById(id, unidad, tema) {
 }
 
 export async function getMateriasByIdCarrera(id) {
-    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${id}`);
+    const res = await fetch(`${API_URL}/materia?idcarrera=${id}`);
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -26,7 +27,7 @@ export async function getMateriasByIdCarrera(id) {
 }
 
 export async function getUnidadesByIdCarreraMateria(idcarrera, materia) {
-    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${idcarrera}&id=${materia}`);
+    const res = await fetch(`${API_URL}/materia?idcarrera=${idcarrera}&id=${materia}`);
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -35,7 +36,7 @@ export async function getUnidadesByIdCarreraMateria(idcarrera, materia) {
 }
 
 export async function getTemasByIdCarreraMateriaUnidad(idcarrera, materia, unidad) {
-    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${idcarrera}&id=${materia}&unidad=${unidad}`);
+    const res = await fetch(`${API_URL}/materia?idcarrera=${idcarrera}&id=${materia}&unidad=${unidad}`);
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -44,7 +45,7 @@ export async function getTemasByIdCarreraMateriaUnidad(idcarrera, materia, unida
 }
 
 export async function createMateria(materia) {
-    const res = await fetch('http://localhost:3000/api/materia', {
+    const res = await fetch(`${API_URL}/materia`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -59,7 +60,7 @@ export async function createMateria(materia) {
 }
 
 export async function updateMateria(id, materia) {
-    const res = await fetch(`http://localhost:3000/api/materia?id=${id}`, {
+    const res = await fetch(`${API_URL}/materia?id=${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -75,7 +76,7 @@ export async function updateMateria(id, materia) {
 
 export async function deleteMateria(materia) {
     const { idmateria, unidad, tema } = materia
-    const res = await fetch(`http://localhost:3000/api/materia?idmateria=${idmateria}&unidad=${unidad}&tema=${tema}`, {
+    const res = await fetch(`${API_URL}/materia?idmateria=${idmateria}&unidad=${unidad}&tema=${tema}`, {
         method: 'DELETE'
     })
     if(!res.ok || res.body === null){
@@ -86,7 +87,7 @@ export async function deleteMateria(materia) {
 }
 
 export async function getNombreMateriaByCarreraMateria(idcarrera, idmateria) {
-    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${idcarrera}&id=${idmateria}&request=nombre`);
+    const res = await fetch(`${API_URL}/materia?idcarrera=${idcarrera}&id=${idmateria}&request=nombre`);
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
