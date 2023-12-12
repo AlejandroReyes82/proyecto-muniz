@@ -7,6 +7,7 @@ import { useState } from "react"
 import { auth } from "../services/auth"
 import { useCookies } from 'next-client-cookies'
 import { redirect } from 'next/navigation'
+import { BASE_API_URL } from "@/utils/constants"
 export default function Login (){
 
     const [loading, setLoading] = useState(false)
@@ -16,7 +17,11 @@ export default function Login (){
     if(user){
         redirect('/dashboard')
     }
+
     async function onSubmit (e) {
+        if(!BASE_API_URL){
+            return null
+        }
         e.preventDefault()
         setError(null)
         setLoading(true)
