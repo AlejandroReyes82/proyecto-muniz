@@ -64,7 +64,8 @@ export default function Sidebar() {
                     <div className='h-40 flex items-center px-8'>
                         <a href='/dashboard' className='flex-none'>
                             {/* eslint-disable-next-line @next/next/no-img-element*/}
-                            <img src="http://www.itparral.edu.mx/wp-content/themes/tec-parral/assets/img-gobierno/pleca-tecparral.svg" width={140} className="mx-auto" alt="logo"/>
+                            {}
+                            <img src="/TecParral.svg" width={140} className="mx-auto" alt="logo"/>
                         </a>
                         <div className="py-4 px-4 items-center justify-center text-center">
                             <div className="gap-x-4">
