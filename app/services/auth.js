@@ -1,6 +1,6 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 export async function auth(usuario,contrasena){
-    const API_URL = process.env.NEXT_PUBLIC_API_URL
-    const res = await fetch(`${API_URL}/auth`, {
+    const res = await fetch(`api/auth`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
