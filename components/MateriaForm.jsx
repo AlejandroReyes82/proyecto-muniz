@@ -40,7 +40,7 @@ export default function MateriaForm() {
             nombretema: data.get('nombretema')
         }
         setMateria(mat)
-        let result = {}
+        let result = {data: {error: "Sin conexion al servicio", message: null}}
         if(id){
             result = await updateMateria(id, mat)
         }else{
@@ -85,7 +85,7 @@ export default function MateriaForm() {
                                     required
                                     onChange={(event) => setMateria({ ...materia, idcarrera: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                    value={id ? materia?.idcarrera : null}
+                                    value={id ? materia?.idcarrera : undefined}
                                 />
                             </div>
                             <div>
@@ -97,7 +97,7 @@ export default function MateriaForm() {
                                     name="idmateria"
                                     required
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                    value={id ? materia?.idmateria : null}
+                                    value={id ? materia?.idmateria : undefined}
                                 />
                             </div>
                             <div>
@@ -109,7 +109,7 @@ export default function MateriaForm() {
                                     name="nombremateria"
                                     required
                                     onChange={(event) => setMateria({ ...materia, nombremateria: event.target.value })}
-                                    value={id ? materia?.nombremateria : null}
+                                    value={id ? materia?.nombremateria : undefined}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -122,7 +122,7 @@ export default function MateriaForm() {
                                     name="horassemana"
                                     required
                                     onChange={(event) => setMateria({ ...materia, horassemana: event.target.value })}
-                                    value={id ? materia?.horassemana : null}
+                                    value={id ? materia?.horassemana : undefined}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -135,7 +135,7 @@ export default function MateriaForm() {
                                     name="idunidad"
                                     required
                                     onChange={(event) => setMateria({ ...materia, unidad: event.target.value })}
-                                    value={id ? materia?.unidad : null}
+                                    value={id ? materia?.unidad : undefined}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -148,7 +148,7 @@ export default function MateriaForm() {
                                     name="nombreunidad"
                                     required
                                     onChange={(event) => setMateria({ ...materia, nombreunidad: event.target.value })}
-                                    value={id ? materia?.nombreunidad : null}
+                                    value={id ? materia?.nombreunidad : undefined}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -161,7 +161,7 @@ export default function MateriaForm() {
                                     name="idtema"
                                     required
                                     onChange={(event) => setMateria({ ...materia, tema: event.target.value })}
-                                    value={id ? materia?.tema : null}
+                                    value={id ? materia?.tema : undefined}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                     />
                             </div>
@@ -173,7 +173,7 @@ export default function MateriaForm() {
                                     type="text"
                                     name="nombretema"
                                     required
-                                    value={id ? materia?.nombretema : null}
+                                    value={id ? materia?.nombretema : undefined}
                                     onChange={(event) => setMateria({ ...materia, nombretema: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg mb-4"
                                 />

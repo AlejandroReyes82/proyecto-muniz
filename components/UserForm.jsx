@@ -38,7 +38,7 @@ export default function CreateNewUser () {
             apellido: data.get('lastname')
         }
         setUser(userData)
-        let result = {}
+        let result = {data: {error: "Sin conexion al servicio", message: null}}
         if(id){
             result = await putUsuario(userData, id)
         }else{
