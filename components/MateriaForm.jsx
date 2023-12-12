@@ -4,12 +4,14 @@ import { Button } from './ui/button'
 import { Loader2 } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
 import { useState } from 'react'
-import { createMateria, getMateriaById, updateMateria } from '@/app/services/materia'
+import { createMateria, getMateriaById, getNombreMateriaByCarreraMateria, updateMateria } from '@/app/services/materia'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function MateriaForm() {
     const [loading, setLoading] = useState(false)
     const [materia, setMateria] = useState({})
+    const [nombreMateria, setNombreMateria] = useState(null)
+
     const router = useRouter()
     const id = useSearchParams().get('id')
     const unidad = useSearchParams().get('unidad')
@@ -60,6 +62,15 @@ export default function MateriaForm() {
         setLoading(false)
     }
 
+    const handleSearchMateriaNombre = async (e) => {
+        setNombreMateria(null)
+        const selectedMateria = e.target.value
+        const data = await getNombreMateriaByCarreraMateria(materia.idcarrera, selectedMateria)
+        if(data.length > 0){
+            setNombreMateria(data[0].nombremateria)
+        }
+    }
+
   return (
     <>
     {id && !materia ? <h1 className="text-2xl font-bold sm:text-3xl">Cargando datos: {materia?.nombremateria}</h1> :
@@ -86,6 +97,7 @@ export default function MateriaForm() {
                                     onChange={(event) => setMateria({ ...materia, idcarrera: event.target.value })}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                     value={id ? materia?.idcarrera : undefined}
+                                    readOnly={id ? true : false}
                                 />
                             </div>
                             <div>
@@ -98,6 +110,7 @@ export default function MateriaForm() {
                                     required
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                     value={id ? materia?.idmateria : undefined}
+                                    onBlur={handleSearchMateriaNombre}
                                 />
                             </div>
                             <div>
@@ -108,8 +121,10 @@ export default function MateriaForm() {
                                     type="text"
                                     name="nombremateria"
                                     required
+                                    // onBlur={(event) => setMateria({ ...materia, nombremateria: event.target.value })}
                                     onChange={(event) => setMateria({ ...materia, nombremateria: event.target.value })}
-                                    value={id ? materia?.nombremateria : undefined}
+                                    value={id || nombreMateria ? nombreMateria ? nombreMateria : materia?.nombremateria : undefined}
+                                    readOnly={nombreMateria ? true : false}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -136,6 +151,7 @@ export default function MateriaForm() {
                                     required
                                     onChange={(event) => setMateria({ ...materia, unidad: event.target.value })}
                                     value={id ? materia?.unidad : undefined}
+                                    readOnly={id ? true : false}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>
@@ -162,6 +178,7 @@ export default function MateriaForm() {
                                     required
                                     onChange={(event) => setMateria({ ...materia, tema: event.target.value })}
                                     value={id ? materia?.tema : undefined}
+                                    readOnly={id ? true : false}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                     />
                             </div>

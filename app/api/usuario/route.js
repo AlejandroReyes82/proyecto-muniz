@@ -23,13 +23,7 @@ export async function DELETE(req) {
     const {searchParams} = new URL(req.url)
     const id = searchParams.get("id")
     const client = await conn.connect();
-    const result = await client.query(
-      `BEGIN;
-      DELETE FROM propuestadosificacion WHERE idusuario = ${id};
-      DELETE FROM Usuario WHERE idusuario = ${id};
-      COMMIT;
-      `
-    );
+    const result = await client.query(`DELETE FROM Usuario WHERE idusuario = ${id};`);
     client.release();
     if (result.rowCount === 0) {
       return new Response(JSON.stringify({error: "Usuario no existe"}), { status: 200 });
@@ -37,6 +31,9 @@ export async function DELETE(req) {
     return new Response(JSON.stringify({message: "Usuario eliminado con éxito"}), { status: 200 });
 
   } catch (error) {
+    if(error.code === '23503'){
+      return new Response(JSON.stringify({error: "No se puede eliminar el usuario porque tiene dosificaciones asociadas"}), { status: 200 });
+    }
     return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
   }
 }

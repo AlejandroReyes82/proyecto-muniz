@@ -46,8 +46,6 @@ export async function POST(req) {
   }
 }
 
-
-//Revisar funcion
 export async function PUT(req) {
   try {
     const body = await req.json()

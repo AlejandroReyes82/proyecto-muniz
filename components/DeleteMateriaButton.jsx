@@ -8,11 +8,11 @@ export default function DeleteUserButton({idmateria, unidad, tema, setMaterias})
     
     const handleRemoveMateria = async ({idmateria, unidad, tema}) => {
         const response = await deleteMateria({idmateria, unidad, tema})
-        if (response) {
+        if (!response.error) {
             setMaterias((prev) => prev.filter((item) => item.idmateria !== idmateria))
             toast.success('Materia eliminada correctamente')
         } else {
-            toast.error('Error al eliminar materia')
+            toast.error(response.error)
         }
     }
 

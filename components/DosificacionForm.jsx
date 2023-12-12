@@ -49,6 +49,7 @@ export default function DosificacionForm() {
 
     const handleSelectCarrera = async (e) => {
         setLoadingNombreMateria(true)
+        setMaterias([])
         // Obtiene las materias de la carrera seleccionada
         const selectedValueCarrera = parseInt(e.target.value, 10);
         setSelectedIdCarrera(selectedValueCarrera)
@@ -155,7 +156,6 @@ export default function DosificacionForm() {
                         type="number"
                         name="idcarrera"
                         required
-                        // onChange={(event) => setMateria({ ...materia, idcarrera: event.target.value })}
                         className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         onBlur={handleSelectCarrera}
                         value={dosificacion ? dosificacion.idcarrera : undefined}

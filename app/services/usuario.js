@@ -8,7 +8,6 @@ export async function getUsuarios(){
 }
 
 export async function deleteUsuario({id}){
-    console.log(id)
     const res = await fetch(`http://localhost:3000/api/usuario?id=${id}`,{
         method: 'DELETE'
     })

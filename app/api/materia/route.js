@@ -6,8 +6,11 @@ export async function GET(req) {
     const unidad = searchParams.get("unidad")
     const tema = searchParams.get("tema")
     const idcarrera = searchParams.get("idcarrera")
+    const request = searchParams.get("request")
     let result = ''
-    if(idmateria && unidad && tema){
+    if(request === 'nombre'){
+      result = await GET_NOMBRE_BY_IDCARRERA_MATERIA(idcarrera, idmateria)
+    }else if(idmateria && unidad && tema){
       result = await GET_BY_ID(idmateria, unidad, tema)
     }else if(idcarrera && idmateria && unidad){
       result = await GET_BY_IDCARRERA_MATERIA_UNIDAD(idcarrera, idmateria, unidad)
@@ -28,7 +31,7 @@ export async function POST(req) {
   try {
     const { idcarrera, idmateria, nombremateria, horassemana, unidad, nombreunidad, idtema, nombretema  } = await req.json();
     const client = await conn.connect()
-    const result1 = await client.query(`SELECT * FROM Materia WHERE idcarrera = '${idcarrera}' and idmateria = '${idmateria}' and unidad = '${unidad}' and tema = '${idtema}'`);
+    const result1 = await client.query(`SELECT * FROM Materia WHERE idcarrera = ${idcarrera} and idmateria = ${idmateria} and unidad = ${unidad} and tema = ${idtema}`);
     if(result1.rows.length > 0){
       return new Response(JSON.stringify({error: "La combinación de carrera, materia, unidad y tema ya existen"}), { status: 200 });
     }
@@ -49,7 +52,7 @@ export async function PUT(req) {
     const id = searchParams.get("id")
     const { idcarrera, nombremateria, horassemana, unidad, nombreunidad, idtema, nombretema } = await req.json();
     const client = await conn.connect()
-    await client.query('UPDATE Materia SET idcarrera = $1, nombremateria = $2, horassemana = $3, unidad = $4, nombreunidad = $5, tema = $6, nombretema = $7 WHERE idmateria = $8', [idcarrera, nombremateria, horassemana, unidad, nombreunidad, idtema, nombretema, id])
+    await client.query('UPDATE Materia SET nombremateria = $1, horassemana = $2,  nombreunidad = $3, nombretema = $4 WHERE idmateria = $5 AND idcarrera = $6 AND unidad = $7 AND tema = $8'  , [nombremateria, horassemana, nombreunidad, nombretema, id, idcarrera, unidad, idtema])
     client.release()
     return new Response(JSON.stringify({message:"Materia actualizada con éxito"}), { status: 200 });
   } catch (error) {
@@ -69,9 +72,13 @@ export async function DELETE(req) {
     const client = await conn.connect()
     const result = await client.query('DELETE FROM Materia WHERE idmateria = $1 and unidad = $2 and tema = $3', [idmateria, unidad, tema])
     client.release()
+    console.log(result)
     return new Response(JSON.stringify(result.rows), { status: 200 })
   } catch (error) {
-    return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
+    if(error.code === '23503'){
+      return new Response(JSON.stringify({error: "No se puede eliminar la materia porque tiene dosificaciones asociadas"}), { status: 200 });
+    }
+    return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 403 });
   }
 }
 
@@ -124,6 +131,18 @@ async function GET_BY_IDCARRERA_MATERIA_UNIDAD(idcarrera, idmateria, unidad) {
   try {
     const client = await conn.connect()
     const result = await client.query('SELECT DISTINCT(tema) as tema, nombretema FROM Materia WHERE idcarrera = $1 AND idmateria = $2 AND unidad = $3', [idcarrera, idmateria, unidad])
+    client.release()
+    return result
+  } catch (error) {
+    return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
+  }
+}
+
+async function GET_NOMBRE_BY_IDCARRERA_MATERIA(idcarrera, idmateria) {
+  console.log(idcarrera, idmateria)
+  try {
+    const client = await conn.connect()
+    const result = await client.query('SELECT nombremateria FROM Materia WHERE idcarrera = $1 AND idmateria = $2', [idcarrera, idmateria])
     client.release()
     return result
   } catch (error) {

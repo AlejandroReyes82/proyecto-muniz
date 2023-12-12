@@ -6,12 +6,12 @@ import { Toaster, toast } from 'sonner'
 
 export default function DeleteUserButton({id, setUsuarios}) {
     const handleRemoveUser = async (id) => {
-        const response = deleteUsuario({id})
-        if (response) {
+        const response = await deleteUsuario({id})
+        if (!response.error) {
             setUsuarios((prev) => prev.filter((item) => item.idusuario !== id))
             toast.success('Usuario eliminado correctamente')
         } else {
-            toast.error('Error al eliminar usuario')
+            toast.error(response.error)
         }
     }
 

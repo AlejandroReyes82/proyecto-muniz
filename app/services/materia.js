@@ -70,15 +70,23 @@ export async function updateMateria(id, materia) {
         return {error: 'Error obteniendo datos de la base de datos'}
     }
     const data = await res.json()
-    console.log(data)
     return { data }
 }
 
-export async function deleteMateria( materia) {
+export async function deleteMateria(materia) {
     const { idmateria, unidad, tema } = materia
     const res = await fetch(`http://localhost:3000/api/materia?idmateria=${idmateria}&unidad=${unidad}&tema=${tema}`, {
         method: 'DELETE'
     })
+    if(!res.ok || res.body === null){
+        return {error: 'Error obteniendo datos de la base de datos'}
+    }
+    const data = await res.json()
+    return data
+}
+
+export async function getNombreMateriaByCarreraMateria(idcarrera, idmateria) {
+    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${idcarrera}&id=${idmateria}&request=nombre`);
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
