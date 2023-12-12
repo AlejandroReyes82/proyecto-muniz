@@ -11,7 +11,14 @@ export async function POST(req) {
         return new Response("Usuario y/o contraseña incorrectos", {
           status: 401,
       });
-      return new Response(JSON.stringify(result.rows));
+      return new Response(JSON.stringify(result.rows,{ status: 200,
+          headers: {
+            'Access-Control-Origin' : '*',
+            'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+          }
+        })
+      );
     } catch (error) {
       return new Response(JSON.stringify({error: "Error obteniendo datos de la base de datos"}), { status: 200 });
     }
