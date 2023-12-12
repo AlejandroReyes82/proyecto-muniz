@@ -1,6 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { BASE_API_URL } from "@/utils/constants"
+
 export async function getDosificacion(){
-    const res = await fetch(`${API_URL}/dosificacion`)
+    const res = await fetch(`${BASE_API_URL}/api/dosificacion`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -9,7 +10,7 @@ export async function getDosificacion(){
 }
 
 export async function getDosificacionByID({id}){
-    const res = await fetch(`${API_URL}/dosificacion?id=${id}`)
+    const res = await fetch(`${BASE_API_URL}/api/dosificacion?id=${id}`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -18,7 +19,7 @@ export async function getDosificacionByID({id}){
 }
 
 export async function getDosificacionByIdCarreraMateriaUnidadTema({idcarrera, idmateria, idunidad, idtema, idusuario}){
-    const res = await fetch(`${API_URL}/dosificacion?idcarrera=${idcarrera}&idmateria=${idmateria}&idunidad=${idunidad}&idtema=${idtema}&id=${idusuario}`)
+    const res = await fetch(`${BASE_API_URL}/api/dosificacion?idcarrera=${idcarrera}&idmateria=${idmateria}&idunidad=${idunidad}&idtema=${idtema}&id=${idusuario}`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -27,7 +28,7 @@ export async function getDosificacionByIdCarreraMateriaUnidadTema({idcarrera, id
 }
 
 export async function createDosificacion({dosificacionData})  {
-    const res = await fetch(`${API_URL}/dosificacion`, {
+    const res = await fetch(`${BASE_API_URL}/api/dosificacion`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -42,7 +43,7 @@ export async function createDosificacion({dosificacionData})  {
 }
 
 export async function updateDosificacion({newDosificacion})  {
-    const res = await fetch(`${API_URL}/dosificacion`, {
+    const res = await fetch(`${BASE_API_URL}/api/dosificacion`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -57,7 +58,7 @@ export async function updateDosificacion({newDosificacion})  {
 }
 
 export async function deleteDosificacion({dosificacion})  {
-    const res = await fetch(`${API_URL}/dosificacion`, {
+    const res = await fetch(`${BASE_API_URL}/api/dosificacion`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'

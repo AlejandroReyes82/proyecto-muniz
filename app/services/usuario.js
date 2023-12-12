@@ -1,6 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { BASE_API_URL } from "@/utils/constants"
+
 export async function getUsuarios(){
-    const res = await fetch(`${API_URL}/usuario`)
+    const res = await fetch(`${BASE_API_URL}/api/usuario`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -9,7 +10,7 @@ export async function getUsuarios(){
 }
 
 export async function deleteUsuario({id}){
-    const res = await fetch(`${API_URL}/usuario?id=${id}`,{
+    const res = await fetch(`${BASE_API_URL}/api/usuario?id=${id}`,{
         method: 'DELETE'
     })
     if(!res.ok || res.body === null){
@@ -20,7 +21,7 @@ export async function deleteUsuario({id}){
 }
 
 export async function postUsuario({userData})  {
-    const res = await fetch(`${API_URL}/usuario`, {
+    const res = await fetch(`${BASE_API_URL}/api/usuario`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -35,7 +36,7 @@ export async function postUsuario({userData})  {
 }
 
 export async function getUsuarioById(id){
-    const res = await fetch(`${API_URL}/usuario?id=${id}`)
+    const res = await fetch(`${BASE_API_URL}/api/usuario?id=${id}`)
     if(!res.ok || res.body === null){
         return {error: 'Error obteniendo datos de la base de datos'}
     }
@@ -44,7 +45,7 @@ export async function getUsuarioById(id){
 }
 
 export async function putUsuario(userData, id) {
-    const res = await fetch(`${API_URL}/usuario?id=${id}`, {
+    const res = await fetch(`${BASE_API_URL}/api/usuario?id=${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

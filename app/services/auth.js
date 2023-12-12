@@ -1,6 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { BASE_API_URL } from "@/utils/constants"
+
 export async function auth(usuario,contrasena){
-    const res = await fetch(`api/auth`, {
+    const res = await fetch(`${BASE_API_URL}/api/auth`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
