@@ -18,7 +18,7 @@ CREATE TABLE Materia (
     NombreUnidad VARCHAR(100),
     Tema INT,
     NombreTema VARCHAR(100),
-    PRIMARY KEY (IdCarrera, IdMateria)
+    PRIMARY KEY (IdCarrera, IdMateria, Unidad, Tema)
 );
 
 
@@ -31,5 +31,6 @@ CREATE TABLE PropuestaDosificacion (
     Tema INT,
     Tiempo INT,
     FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario),
-    FOREIGN KEY (IdCarrera, IdMateria) REFERENCES Materia(IdCarrera, IdMateria)
+    FOREIGN KEY (IdCarrera, IdMateria, Unidad, Tema) REFERENCES Materia(IdCarrera, IdMateria, Unidad, Tema),
+    UNIQUE (IdUsuario, IdCarrera, IdMateria, Unidad, Tema)
 );
