@@ -16,6 +16,33 @@ export async function getMateriaById(id, unidad, tema) {
     return data
 }
 
+export async function getMateriasByIdCarrera(id) {
+    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${id}`);
+    if(!res.ok || res.body === null){
+        return {error: 'Error obteniendo datos de la base de datos'}
+    }
+    const data = await res.json()
+    return data
+}
+
+export async function getUnidadesByIdCarreraMateria(idcarrera, materia) {
+    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${idcarrera}&id=${materia}`);
+    if(!res.ok || res.body === null){
+        return {error: 'Error obteniendo datos de la base de datos'}
+    }
+    const data = await res.json()
+    return data
+}
+
+export async function getTemasByIdCarreraMateriaUnidad(idcarrera, materia, unidad) {
+    const res = await fetch(`http://localhost:3000/api/materia?idcarrera=${idcarrera}&id=${materia}&unidad=${unidad}`);
+    if(!res.ok || res.body === null){
+        return {error: 'Error obteniendo datos de la base de datos'}
+    }
+    const data = await res.json()
+    return data
+}
+
 export async function createMateria(materia) {
     const res = await fetch('http://localhost:3000/api/materia', {
         method: 'POST',
