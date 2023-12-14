@@ -36,6 +36,7 @@ export default function DosificacionForm() {
     const user = cookies.get('usuario')
     const { id } = JSON.parse(user)
 
+    // Cuando se edita una dosificacion, obtiene la dosificacion por idcarrera, idmateria, idunidad, idtema
     useEffect(() => {
             if (idcarrera && idmateria && idunidad && idtema && idusuario) {
             const getDosificacion = async () => {
@@ -44,30 +45,42 @@ export default function DosificacionForm() {
             }
             getDosificacion()
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [idcarrera, idmateria, idunidad, idtema, idusuario])
 
+    // Cuando se selecciona una carrera, obtiene las materias de la carrera seleccionada
     const handleSelectCarrera = async (e) => {
+        // se activa el loading
         setLoadingNombreMateria(true)
+        // se limpian los campos
         setMaterias([])
         // Obtiene las materias de la carrera seleccionada
+        // pasamos el id de la carrera seleccionada a numero entero
         const selectedValueCarrera = parseInt(e.target.value, 10);
+        // asignamos el id de la carrera seleccionada al estado
         setSelectedIdCarrera(selectedValueCarrera)
+        // obtenemos las materias de la carrera seleccionada de la base de datos
         const materiasbycarrera = await getMateriasByIdCarrera(selectedValueCarrera)
+        // seteamos las materias obtenidas al estado
         setMaterias(materiasbycarrera)
+        // desactivamos el loading
         setLoadingNombreMateria(false)
     }
 
+    // Cuando se selecciona una materia, obtiene las unidades de la carrera y materia seleccionada y el nombre de la materia seleccionada
     const handleSelectMateria = async (e) => {
         setLoadingNombreUnidad(true)
         // Obtiene las unidades de la carrera y materia seleccionada
         const selectedValueMateria = parseInt(e.target.value, 10);
+        // si no se selecciona una materia, se setea el estado a string vacio, y por consecuencia se limpia el campo nombre
         if (selectedValueMateria === 0) {
             setNombreMateria('')
             return;
         }
+        // asignamos el id de la materia seleccionada al estado
         setSelectedIdMateria(selectedValueMateria)
+        // obtenemos las unidades de la carrera y materia seleccionada de la base de datos
         const unidad = await getUnidadesByIdCarreraMateria(idcarrera ? idcarrera : selectedIdCarrera, selectedValueMateria)
+        // seteamos las unidades obtenidas al estado
         setUnidades(unidad)
 
         // Setea el nombre de la materia seleccionada
@@ -106,7 +119,7 @@ export default function DosificacionForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        const dosificacionData = {
+const dosificacionData = {
             idusuario: idusuario ? idusuario : id,
             idcarrera: e.target[0].value,
             idmateria: e.target[1].value,
@@ -115,15 +128,19 @@ export default function DosificacionForm() {
             tiempo: e.target[7].value
         }
         let result = {data: {error: "Sin conexion al servicio", message: null}}
+        // si se edita una dosificacion, se actualiza, sino se crea
         if (dosificacion) {
+            // si es una dosificacion existente, se toma la informacion del estado y se agrega el idusuario al objeto dosificacion
             const newDosificacion = {...dosificacion, idusuario: parseInt(idusuario)}
             result = await updateDosificacion({newDosificacion})
         } else {
-            result = await createDosificacion({dosificacionData})
+                        result = await createDosificacion({dosificacionData})
         }
+        // si no hay error, muestra mensaje de exito y redirecciona a la lista de dosificaciones
         if (!result.data.error) {
             toast.success(result.data.message)
             e.target.reset()
+            // se espera 1 segundo para redireccionar para alcanzar a ver el mensaje de exito
             setTimeout(() => {
                 router.push("/dashboard/dosificaciones")
             }, 1000)
@@ -173,7 +190,9 @@ export default function DosificacionForm() {
                         disabled={dosificacion ? true : false}
                         >
                         <option value="0">{loadingNombreMateria ? <>Cargando...</>:<>Seleccione una Materia</>}</option>
+                        {/* // si se edita una dosificacion, se muestra la materia seleccionada */}
                         {dosificacion && <option key={dosificacion.idmateria} value={dosificacion.idmateria} >{dosificacion.idmateria}</option>}
+                        {/* // si no se edita una dosificacion, se muestran las materias de la carrera seleccionada */}
                         {materias && materias.map((materia) => (
                             <option key={materia.idmateria} value={materia.idmateria}>{materia.idmateria}</option>
                         ))}

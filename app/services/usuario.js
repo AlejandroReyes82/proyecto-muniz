@@ -10,6 +10,7 @@ export async function getUsuarios(){
 }
 
 export async function deleteUsuario({id}){
+    // Mandamos llamar a la API de usuarios para eliminar el usuario
     const res = await fetch(`${BASE_API_URL}/api/usuario?id=${id}`,{
         method: 'DELETE'
     })

@@ -6,7 +6,9 @@ import { deleteDosificacion } from '@/app/services/dosificacion'
 
 export default function DeleteDosificacionButton({dosificacion, setDosificaciones}) {
     const handleRemoveDosificacion = async () => {
+        // llamada a la api para eliminar la dosificacion de la base de datos
         const response = await deleteDosificacion({dosificacion})
+        // si la respuesta es correcta, elimina la dosificacion de la lista (estado)
         if (response) {
             setDosificaciones((prev) =>
                 prev.filter(

@@ -5,9 +5,14 @@ import { deleteUsuario } from '@/app/services/usuario'
 import { Toaster, toast } from 'sonner'
 
 export default function DeleteUserButton({id, setUsuarios}) {
+
+    // Función para eliminar un usuario
     const handleRemoveUser = async (id) => {
+        //Manda llamar el servicio de eliminar usuario
         const response = await deleteUsuario({id})
+        // Si no hay error, elimina el usuario del estado
         if (!response.error) {
+            // Se filtra el usuario eliminado para no mostrarlo en la lista
             setUsuarios((prev) => prev.filter((item) => item.idusuario !== id))
             toast.success('Usuario eliminado correctamente')
         } else {

@@ -62,6 +62,7 @@ export default function MateriaForm() {
         setLoading(false)
     }
 
+    // Función para obtener el nombre de la materia si existe
     const handleSearchMateriaNombre = async (e) => {
         setNombreMateria(null)
         const selectedMateria = e.target.value
@@ -111,6 +112,7 @@ export default function MateriaForm() {
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                     value={id ? materia?.idmateria : undefined}
                                     onBlur={handleSearchMateriaNombre}
+                                    // onChange={(event) => setMateria({ ...materia, idmateria: event.target.value })
                                 />
                             </div>
                             <div>
@@ -124,7 +126,7 @@ export default function MateriaForm() {
                                     // onBlur={(event) => setMateria({ ...materia, nombremateria: event.target.value })}
                                     onChange={(event) => setMateria({ ...materia, nombremateria: event.target.value })}
                                     value={id || nombreMateria ? nombreMateria ? nombreMateria : materia?.nombremateria : undefined}
-                                    readOnly={nombreMateria ? true : false}
+                                    // readOnly={nombreMateria ? true : false}
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                                 />
                             </div>

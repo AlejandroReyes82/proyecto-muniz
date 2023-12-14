@@ -9,29 +9,47 @@ import { useCookies } from 'next-client-cookies'
 import { redirect } from 'next/navigation'
 import { BASE_API_URL } from "@/utils/constants"
 export default function Login (){
-
+    // Estados para el formulario
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+
+    // verifica si el usuario ya esta logueado
     const cookies = useCookies();
     const user = cookies.get('usuario')
+
+    // Si el usuario ya esta logueado, lo redirecciona al dashboard
     if(user){
         redirect('/dashboard')
     }
 
+    // Funcion que se ejecuta al enviar el formulario
     async function onSubmit (e) {
+        // Evita que se recargue la pagina
+        e.preventDefault()
+
+        // Si no hay url base, no hace nada
         if(!BASE_API_URL){
             return null
         }
-        e.preventDefault()
+
+        // Resetea los estados
         setError(null)
         setLoading(true)
+
+        // Obtiene los datos del formulario
         const usuario = e.target[0].value // El primer input
         const password = e.target[1].value // El segundo input
+
+        // Hace la peticion al servidor
         const data = await auth(usuario, password) //Funcion que hace la peticion al servidor
+
+        // Si no hay error, guarda los datos del usuario en las cookies
         if(!data.error){
             cookies.set('usuario', JSON.stringify({id: data.idusuario, usuario:data.usuario, tipo: data.tipo, nombre: data.nombre, apellido: data.apellido}))
             setLoading(false)
         }
+
+        // Si hay error, muestra el error
         setError(data.error)
         setLoading(false)
     }

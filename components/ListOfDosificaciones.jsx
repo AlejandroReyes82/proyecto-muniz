@@ -11,6 +11,7 @@ export default function ListOfDosificaciones({id, tipo}) {
   const [dosificaciones, setDosificaciones] = React.useState(null)
   const router = useRouter()
 
+  // si es administrador, obtiene todas las dosificaciones
   useEffect(() => {
     async function getDosificaciones() {
       let dosificacion = []
@@ -29,9 +30,9 @@ export default function ListOfDosificaciones({id, tipo}) {
     router.push(destination)
   }
 
-   // si es administrador, obtiene todas las dosificaciones
     return (
       <>
+      {/* // si no hay dosificaciones o estan cargando, muestra un mensaje */}
         {!dosificaciones ? (
           <div className="flex justify-center items-center h-64">
             <p className="text-gray-500 text-xl">Cargando...</p>

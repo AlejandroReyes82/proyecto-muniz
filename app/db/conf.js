@@ -2,6 +2,7 @@ import { Pool } from "pg";
 
 let conn;
 
+// si no existe la conexion, la crea
 if (!conn) {
   conn = new Pool({
     user: process.env.PGSQL_USER,

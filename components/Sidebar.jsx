@@ -7,20 +7,25 @@ import { useState } from 'react'
 import { ModeToggle } from './ThemeToggle'
 
 export default function Sidebar() {
+    //Obtener la información usuario de las cookies
     const cookies = useCookies()
     const user = cookies.get('usuario')
 
+    //Si no hay usuario, redirigir al login
     if (!user) {
         redirect('/')
     }
 
+    //Obtener el tipo de usuario, nombre y apellido
     const { tipo, nombre, apellido } = JSON.parse(user)
     const pathname = usePathname()
 
+    //Función para cerrar sesión
     function logout() {
         cookies.remove('usuario')
     }
 
+    //Navegación de la barra lateral de los docentes
     const navigationDocente = [
         {
             href: '/dashboard/dosificaciones',
@@ -29,6 +34,7 @@ export default function Sidebar() {
         }
     ]
 
+    //Navegación de la barra lateral de los administradores
     const navigationAdmin = [
         {
             href: '/dashboard/dosificaciones',
@@ -47,7 +53,7 @@ export default function Sidebar() {
         }
     ]
 
-
+    //Navegación del footer de la barra lateral
     const navsFooter = [
         {
             href: '/login',
@@ -78,10 +84,14 @@ export default function Sidebar() {
                     <div className="flex-1 flex flex-col h-full overflow-auto">
                         <ul className="px-4 text-sm font-medium flex-1">
                             {
+                                // si el usuario es administrador, mostrar la navegación de administrador, si no, mostrar la de docente
                                 tipo === 'Administrador' ?
+                                //recorrer el arreglo de navegación de administrador
                                 navigationAdmin.map((item, idx) => (
+                                    //mostrar cada elemento del arreglo
                                     <li key={idx}>
                                         <Link href={item.href} legacyBehavior>
+                                            {/* si el href es igual al pathname (ejemplo: dashboard/dosificaciones), mostrar el texto en azul */}
                                             <a className={`link ${pathname === item.href ? 'text-blue-500' : ''} flex items-center gap-x-2 p-2 rounded-lg hover:bg-gray-300`}>
                                                 <div>{item.icon}</div>
                                                 {item.name}

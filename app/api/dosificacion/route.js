@@ -25,6 +25,8 @@ export async function POST(req) {
   try {
     const body = await req.json()
     const client = await conn.connect()
+    // Se inserta la dosificación
+    // Se actualiza la materia con el cambio en horas semana
     const result = await client.query(
       `BEGIN;
         INSERT INTO PropuestaDosificacion (idusuario, idcarrera, idmateria, unidad, tema, tiempo) VALUES (${body.idusuario}, ${body.idcarrera}, ${body.idmateria}, ${body.unidad}, ${body.tema}, ${body.tiempo});
@@ -50,6 +52,9 @@ export async function PUT(req) {
   try {
     const body = await req.json()
     const client = await conn.connect()
+    // Se obtiene el tiempo actual de la dosificación
+    // Se actualiza la dosificación
+    // Se actualiza la materia con el cambio en horas semana
     await client.query(
       `
       BEGIN;

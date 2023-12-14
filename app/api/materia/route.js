@@ -139,7 +139,6 @@ async function GET_BY_IDCARRERA_MATERIA_UNIDAD(idcarrera, idmateria, unidad) {
 }
 
 async function GET_NOMBRE_BY_IDCARRERA_MATERIA(idcarrera, idmateria) {
-  console.log(idcarrera, idmateria)
   try {
     const client = await conn.connect()
     const result = await client.query('SELECT nombremateria FROM Materia WHERE idcarrera = $1 AND idmateria = $2', [idcarrera, idmateria])
